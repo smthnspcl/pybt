@@ -1,9 +1,11 @@
-import bluetooth
-from sys import argv
-from os.path import isdir, isfile
-from os import makedirs
 from atexit import register
 from datetime import datetime
+from gattlib import DiscoveryService
+from os import makedirs
+from os.path import isdir, isfile
+from sys import argv
+
+from bluetooth import discover_devices, find_service
 
 try:
     import simplejson as json
@@ -29,17 +31,32 @@ class Device(object):
         self.timestamp = datetime.now().strftime(Static.timestamp_format)
 
     @staticmethod
-    def get_near_devices(duration=5, lookup_names=True):
-        print "scanning for", duration, "seconds"
-        return Device.found_to_list(bluetooth.discover_devices(duration=duration, lookup_names=lookup_names))
+    def get_near_devices(duration=5):
+        return Device.get_near_classic_devices(duration) + Device.get_near_le_devices(duration=duration)
+
+    @staticmethod
+    def get_near_classic_devices(duration=5, lookup_names=True):
+        print "scanning classic for", duration, "seconds"
+        return Device.found_to_list(discover_devices(duration=duration, lookup_names=lookup_names))
+
+    @staticmethod
+    def get_near_le_devices(hci_dev="hci0", duration=5):
+        print "scanning le for", duration, "seconds"
+        s = DiscoveryService(hci_dev)
+        devs = []
+        d = s.discover(2)
+        for k in d.keys():
+            devs.append((k, d[k]))
+        return Device.found_to_list(devs)
 
     def get_services(self):
-        self.services = Service.found_to_list(bluetooth.find_service(address=self.address))
+        self.services = Service.found_to_list(find_service(address=self.address))
         return self.services
 
     @staticmethod
     def found_to_list(devices):
         devs = []
+        print devices
         for device in devices:
             devs.append(Device(device[0], device[1]))
         return devs
@@ -140,8 +157,7 @@ class Main(object):
         while self._do_run:
             for dev in Main.scan_until_found():
                 dev.get_services()
-                print "-" * 42
-                print dev.address, dev.name
+                print dev.__dict__
                 print "\tservices:", len(dev.services)
                 dev.save(self.out)
 
