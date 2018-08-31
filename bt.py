@@ -11,6 +11,7 @@ try:
     import simplejson as json
 except ImportError:
     import json
+
     print "install simplejson: sudo pip install -U simplejson"
 
 
@@ -23,12 +24,17 @@ class Device(object):
     address = None
     name = None
     services = None
+    position = None
+    manufacturer = None
 
-    def __init__(self, addr, name=None):
+    def __init__(self, addr, name=None, position=None):
         self.address = addr
         self.name = name
         self.services = []
         self.timestamp = datetime.now().strftime(Static.timestamp_format)
+        if position is not None:
+            self.position = [position]
+        self.manufacturer = ""
 
     @staticmethod
     def get_near_devices(duration=5):
@@ -66,6 +72,9 @@ class Device(object):
         for s in self.services:
             d["services"].append(s)
         return d
+
+    def to_string(self):
+        return json.dumps(self.to_dict())
 
     def save(self, path):
         if isdir(path):
