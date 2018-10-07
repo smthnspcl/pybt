@@ -9,7 +9,7 @@ from libs.bt.le import LEDevice
 from libs.bt.beacon import Beacon
 
 
-class Main(object):
+class Scanner(object):
     _do_run = False
     out = "out/"
     duration = 5
@@ -62,7 +62,7 @@ class Main(object):
     def run(self):
         print "running"
         while self._do_run:
-            for dev in Main.scan_until_found():
+            for dev in self.scan_until_found():
                 if isinstance(dev, ClassicDevice):
                     dev.get_services()
                     print "-" * 42
@@ -80,4 +80,4 @@ class Main(object):
 
 
 if __name__ == '__main__':
-    Main().run()
+    Scanner().run()
