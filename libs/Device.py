@@ -11,3 +11,7 @@ class Device(object):
 
     def to_dict(self):
         return self.__dict__
+
+    @staticmethod
+    def scan(duration):
+        return []

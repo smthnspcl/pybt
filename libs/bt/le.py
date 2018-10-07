@@ -72,23 +72,23 @@ class Service(object):
 
 
 class Characteristic(object):
-    supportsRead = False
-    handle = None
     uuid = None
     name = None
+    data = None
+    handle = None
     properties = None
 
     def __init__(self, **kwargs):
-        if "supportsRead" in kwargs.keys():
-            self.supportsRead = kwargs.get("supportsRead")
-        if "handle" in kwargs.keys():
-            self.handle = kwargs.get("handle")
+        if "data" in kwargs.keys():
+            self.data = kwargs.get("data")
         if "uuid" in kwargs.keys():
             self.uuid = kwargs.get("uuid")
         if "properties" in kwargs.keys():
             self.properties = kwargs.get("properties")
         if "name" in kwargs.keys():
             self.name = kwargs.get("name")
+        if "handle" in kwargs.keys():
+            self.handle = kwargs.get("handle")
 
     @staticmethod
     def from_service(service):
@@ -121,7 +121,32 @@ class LEDevice(Device):
         self.services = []
 
     @staticmethod
-    def found_to_list(devices):
+    def read_services(device):
+        if not isinstance(device, LEDevice):
+            return device
+        try:
+            p = Peripheral(device.address, device.addressType)
+            for s in device.services:
+                for c in s.characteristics:
+                    c.data = p.readCharacteristic(c.handle)
+        except BTLEException:
+            print "could not connect to", device.address
+            pass
+        return device
+
+    @staticmethod
+    def read_characteristics(device, characteristics):
+        try:
+            p = Peripheral(device.address, device.addressType)
+            for c in characteristics:
+                c.data = p.readCharacteristic(c.handle)
+        except BTLEException:
+            print "could not connect to", device.address
+            pass
+        return characteristics
+
+    @staticmethod
+    def found_to_list(devices, read_all=False):
         devs = []
         for d in devices:
             _ = LEDevice(d.addr)
@@ -131,18 +156,18 @@ class LEDevice(Device):
             for (at, _d, v) in d.getScanData():
                 if _d == "Complete Local Name" or _d == "Short Local Name":
                     _.name = v
-                _.advertisements.append(Advertisement(
-                    ad_type=at, desc=_d, val=v
-                ))
+                _.advertisements.append(Advertisement(ad_type=at, desc=_d, val=v))
             if _.connectable:
                 _.services = Service.from_device(_.address, _.addressType)
+                if read_all:
+                    _ = LEDevice.read_services(_)
             devs.append(_)
         return devs
 
     @staticmethod
-    def scan(duration=3.0):
+    def scan(duration=3.0, read_all=False):
         s = Scanner().withDelegate(ScanDelegate())
-        return LEDevice.found_to_list(s.scan(duration))
+        return LEDevice.found_to_list(s.scan(duration), read_all)
 
     def to_dict(self):
         ads = []

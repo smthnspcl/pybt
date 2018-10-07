@@ -12,9 +12,9 @@ class ClassicDevice(Device):
         self.name = name
 
     @staticmethod
-    def scan(duration=3, lookup_names=True):
+    def scan(duration=3):
         return ClassicDevice.found_to_list(discover_devices(duration=duration,
-                                                            lookup_names=lookup_names))
+                                                            lookup_names=True))
 
     def get_services(self):
         self.services = Service.found_to_list(find_service(address=self.address))

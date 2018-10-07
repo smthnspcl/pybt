@@ -25,7 +25,7 @@ class Scanner(object):
             print "classic"
             devs += ClassicDevice.scan()
             print "le"
-            devs += LEDevice.scan()
+            devs += LEDevice.scan(read_all=True)
             print "beacon"
             devs += Beacon.scan()
         print "found", len(devs), "devices"
@@ -75,7 +75,6 @@ class Scanner(object):
                     print "-" * 42
                     print "le", dev.address, dev.name
                     print "\tservices:", len(dev.services), "\tads:", len(dev.advertisements)
-
                 Static.save(dev, self.out)
 
 

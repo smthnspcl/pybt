@@ -1,7 +1,7 @@
 from os.path import isfile, isdir
 import json
 from datetime import datetime
-import pprint
+
 
 class Static(object):
     timestamp_format = "%d.%m.%Y %H:%M:%S"
@@ -14,12 +14,10 @@ class Static(object):
     def save(obj, path):
         if isdir(path):
             fpath = path + obj.address.replace(':', '').lower() + ".json"
-            print fpath
             if isfile(fpath):
                 fdata = json.load(open(fpath))
             else:
                 fdata = {}
             fdata.update(obj.to_dict())
-            pprint.pprint(fdata)
             with open(fpath, 'w') as o:
                 json.dump(fdata, o)
