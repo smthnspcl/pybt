@@ -19,16 +19,16 @@ class Scanner(object):
 
     @staticmethod
     def scan_until_found():
-        print "scanning until found"
+        print("scanning until found")
         devs = []
         while len(devs) == 0:
-            print "classic"
+            print("classic")
             devs += ClassicDevice.scan()
-            print "le"
+            print("le")
             devs += LEDevice.scan(read_all=True)
-            print "beacon"
+            print("beacon")
             devs += Beacon.scan()
-        print "found", len(devs), "devices"
+        print("found", len(devs), "devices")
         return devs
 
     def __init__(self):
@@ -40,9 +40,9 @@ class Scanner(object):
     def check_args(self):
         if not isdir(self.out):
             makedirs(self.out)
-            print "created directory", self.out
+            print("created directory", self.out)
         if self.duration < 1 or self.duration > 20:
-            print "scan duration of", str(self.duration), "seems off"
+            print("scan duration of", str(self.duration), "seems off")
 
     def parse_args(self):
         i = 0
@@ -52,29 +52,29 @@ class Scanner(object):
             elif argv[i] == "-d" or argv[i] == "--duration":
                 self.duration = int(argv[i + 1])
             elif argv[i] == "--help":
-                print "usage: python", __file__, "{arguments}"
+                print("usage: python", __file__, "{arguments}")
                 for ak in self.__dict__.keys():
                     if not ak.startswith('_'):
-                        print "-" + ak[0], "\t", "--" + ak
+                        print("-" + ak[0], "\t", "--" + ak)
                 exit()
             i += 1
 
     def run(self):
-        print "running"
+        print("running")
         while self._do_run:
             for dev in self.scan_until_found():
                 if isinstance(dev, ClassicDevice):
                     dev.get_services()
-                    print "-" * 42
-                    print "classic", dev.address, dev.name
-                    print "\tservices:", len(dev.services)
+                    print("-" * 42)
+                    print("classic", dev.address, dev.name)
+                    print("\tservices:", len(dev.services))
                 if isinstance(dev, Beacon):
-                    print "-" * 42
-                    print "beacon", dev.address, dev.power, dev.rssi
+                    print("-" * 42)
+                    print("beacon", dev.address, dev.power, dev.rssi)
                 if isinstance(dev, LEDevice):
-                    print "-" * 42
-                    print "le", dev.address, dev.name
-                    print "\tservices:", len(dev.services), "\tads:", len(dev.advertisements)
+                    print("-" * 42)
+                    print("le", dev.address, dev.name)
+                    print("\tservices:", len(dev.services), "\tads:", len(dev.advertisements))
                 Static.save(dev, self.out)
 
 

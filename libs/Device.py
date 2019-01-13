@@ -1,4 +1,4 @@
-from Static import Static
+from .Static import Static
 
 
 class Device(object):

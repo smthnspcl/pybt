@@ -59,7 +59,7 @@ class Service(object):
                 ))
             return services
         except BTLEException:
-            print address, "disconnected. could not read services"
+            print(address, "disconnected. could not read services")
             return []
 
     def to_dict(self):
@@ -130,7 +130,7 @@ class LEDevice(Device):
                 for c in s.characteristics:
                     c.data = p.readCharacteristic(c.handle)
         except BTLEException:
-            print "could not connect to", device.address
+            print("could not connect to", device.address)
             pass
         return device
 
@@ -141,7 +141,7 @@ class LEDevice(Device):
             for c in characteristics:
                 c.data = p.readCharacteristic(c.handle)
         except BTLEException:
-            print "could not connect to", device.address
+            print("could not connect to", device.address)
             pass
         return characteristics
 

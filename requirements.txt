@@ -1,3 +1,2 @@
-loguru
 gps
-netifaces
+bluetooth

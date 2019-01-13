@@ -9,7 +9,7 @@ def ble():
     devs = s.discover(2)
 
     for a, n in devs.items():
-        print a, n
+        print(a, n)
         g.connect(True)
 
 
@@ -18,20 +18,20 @@ def main():
                                       flush_cache=True)
 
     for a, n in devs:
-        print a, n
+        print(a, n)
         for i in  bluetooth.find_service(address=a):
-            print i["protocol"], i["port"]
+            print(i["protocol"], i["port"])
             if i["protocol"] == "RFCOMM":
                 s = bluetooth.BluetoothSocket(bluetooth.RFCOMM)
                 s.connect((i["host"], i["port"]))
                 s.send("AT")
-                print s.recv(128)
+                print(s.recv(128))
                 s.close()
             elif i["protocol"] == "L2CAP":
                 s = bluetooth.BluetoothSocket(bluetooth.L2CAP)
                 s.connect((i["host"], i["port"]))
                 s.send("AT")
-                print s.recv(128)
+                print(s.recv(128))
                 s.close()
 
 
