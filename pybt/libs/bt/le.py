@@ -1,5 +1,5 @@
 from ..Device import Device
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException
+from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException, BTLEManagementError
 
 
 class ScanDelegate(DefaultDelegate):
@@ -166,8 +166,13 @@ class LEDevice(Device):
 
     @staticmethod
     def scan(duration=3.0, read_all=False):
-        s = Scanner().withDelegate(ScanDelegate())
-        return LEDevice.found_to_list(s.scan(duration), read_all)
+        try:
+            s = Scanner().withDelegate(ScanDelegate())
+            return LEDevice.found_to_list(s.scan(duration), read_all)
+        except BTLEManagementError as e:
+            print(e.emsg)
+            pass
+        return []
 
     def to_dict(self):
         ads = []

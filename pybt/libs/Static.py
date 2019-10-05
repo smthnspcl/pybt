@@ -21,3 +21,8 @@ class Static(object):
             fdata.update(obj.to_dict())
             with open(fpath, 'w') as o:
                 json.dump(fdata, o)
+
+    @staticmethod
+    def save_multiple(objs, path):
+        for obj in objs:
+            Static.save(obj, path)

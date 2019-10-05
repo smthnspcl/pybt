@@ -19,7 +19,11 @@ class Beacon(object):
 
     @staticmethod
     def scan():
-        return Beacon.found_to_list(BeaconService().scan(2))
+        try:
+            return Beacon.found_to_list(BeaconService().scan(2))
+        except RuntimeError as e:
+            print(e)
+            return []
 
     @staticmethod
     def found_to_list(beacons):
