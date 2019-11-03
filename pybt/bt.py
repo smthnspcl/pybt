@@ -4,10 +4,7 @@ from os import makedirs
 from atexit import register
 from datetime import datetime
 
-from pybt.libs.Static import Static
-from pybt.libs.bt.classic import ClassicDevice
-from pybt.libs.bt.le import LEDevice
-from pybt.libs.bt.beacon import Beacon
+from . import ClassicDevice, LEDevice, Beacon, Static
 
 
 class Scanner(object):
