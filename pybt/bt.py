@@ -4,7 +4,10 @@ from os import makedirs
 from atexit import register
 from datetime import datetime
 
-from . import ClassicDevice, LEDevice, Beacon, Static
+from .libs.bt.le import LEDevice
+from .libs.Static import Static
+from .libs.bt.beacon import Beacon
+from .libs.bt.classic import ClassicDevice
 
 
 class Scanner(object):
