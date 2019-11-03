@@ -31,7 +31,6 @@ class Scanner(object):
         devs = []
         while len(devs) == 0:
             devs = Scanner.scan(le, beacon, classic)
-        print("found", len(devs), "devices")
         return devs
 
     @staticmethod
@@ -40,7 +39,6 @@ class Scanner(object):
         t = datetime.now()
         while (datetime.now() - t).microseconds < (seconds * 1000):
             devs += Scanner.scan(le, beacon, classic)
-        print("found", len(devs), "devices")
         return devs
 
     def __init__(self):
