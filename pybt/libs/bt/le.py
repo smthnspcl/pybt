@@ -1,5 +1,10 @@
 from ..Device import Device
-from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException, BTLEManagementError
+try:
+    from bluepy.btle import Scanner, DefaultDelegate, Peripheral, BTLEException, BTLEManagementError
+except ImportError:
+    print("you need some https://github.com/IanHarvey/bluepy")
+    print("pip3 install bluepy")
+    exit()
 
 
 class ScanDelegate(DefaultDelegate):
