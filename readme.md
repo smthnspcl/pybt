@@ -1,5 +1,5 @@
 ## pybt
-[![Build Status](http://build.eberlein.io:8080/job/pybt/badge/icon)](http://build.eberlein.io:8080/job/pybt/)
+[![Build Status](http://build.eberlein.io:8080/job/python_pybt/badge/icon)](http://build.eberlein.io:8080/job/python_pybt/)
 
 ### how to ...
 #### ... get started
