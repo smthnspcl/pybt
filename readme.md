@@ -4,20 +4,7 @@
 ### how to ...
 #### ... get started
 ```shell script
-sudo apt install python3 python3-dev python3-pip libbluetooth-dev \
-                 libreadline-dev libboost-python-dev libboost-thread-dev -y
-
-# https://stackoverflow.com/questions/41463847/got-error-while-download-gattlib-via-pip3
-pip3 download gattlib
-tar xvzf ./gattlib-0.20150805.tar.gz
-cd gattlib-0.20150805/
-# edit your py version accordingly
-sed -ie 's/boost_python-py34/boost_python37/' setup.py
-
-# OR
-pip3 install .
-
-pip3 install -r requirements.txt
+./dependencies.py
 ```
 
 #### ... to use it
