@@ -13,6 +13,8 @@ tar xvzf ./gattlib-0.20150805.tar.gz
 cd gattlib-0.20150805/
 # edit your py version accordingly
 sed -ie 's/boost_python-py34/boost_python37/' setup.py
+
+# OR
 pip3 install .
 
 pip3 install -r requirements.txt
