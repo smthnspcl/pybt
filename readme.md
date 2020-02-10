@@ -1,6 +1,8 @@
 ## pybt
 [![Build Status](http://build.eberlein.io:8080/job/python_pybt/badge/icon)](http://build.eberlein.io:8080/job/python_pybt/)
 
+[![asciicast](https://asciinema.org/a/299826.svg)](https://asciinema.org/a/299826)
+
 ### how to ...
 #### ... get started
 ```shell script
