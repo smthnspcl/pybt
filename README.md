@@ -1,5 +1,5 @@
 ## pybt
-[![Build Status](http://build.eberlein.io:8080/job/python_pybt/badge/icon)](http://build.eberlein.io:8080/job/python_pybt/)
+[![Build Status](https://build.eberlein.io/buildStatus/icon?job=python_pybt)](https://build.eberlein.io/job/python_pybt/)
 
 [![asciicast](https://asciinema.org/a/299826.svg)](https://asciinema.org/a/299826)
 
