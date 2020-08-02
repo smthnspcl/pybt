@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     long_description=open("README.rst", "r").read(),
-    name="pybt",
+    name="pybt-smthnspcl",
     version="0.42",
     description="bluetooth library",
     author="Pascal Eberlein",
