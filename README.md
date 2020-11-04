@@ -36,4 +36,4 @@ Out[5]:
 
 ```
 
-or check [bt.py](https://github.com/smthnspcl/pybt/blob/master/bt.py)
+or check [bt.py](https://github.com/nbdy/pybt/blob/master/bt.py)
